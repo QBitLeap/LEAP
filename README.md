@@ -12,8 +12,10 @@ isolated viewer.
 Python 3.11 or newer, PyYAML 6 or newer and Qbit Core. Node-backed commands
 can use qbit-cli or HTTP RPC. Wallet operations require a separately managed,
 loaded P2MR wallet; the read-only index follower does not need wallet access.
-macOS, Windows and Linux release artifacts and the separate Umbrel installer
-are planned; native release acceptance is still pending.
+Native macOS, Windows and Linux release artifacts are planned; native release
+acceptance is still pending. The independent [Umbrel app source](https://github.com/QBitLeap/leap-umbrel)
+and [community app store](https://github.com/QBitLeap/umbrel-app-store) are maintained
+separately. Installation requires a validated published catalog.
 
 ## Quick start
 
