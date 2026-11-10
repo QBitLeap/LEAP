@@ -22,6 +22,11 @@ manifest digests and the complete Mainnet/Testnet4 integration checks pass.
 Local image configuration IDs are not downloadable registry references.
 Indexing starts paused. Enable INDEX_ENABLED in app settings after selecting a ready Core instance.
 
+The dashboard accepts a refresh interval in whole minutes, with a one-minute
+default and minimum. The choice is saved in this browser, hidden pages stop
+refreshing, and requests never overlap. Paused indexing is shown explicitly;
+enabled indexing reports its current block and the selected node's block height.
+
 ## Source checks
 
 ```sh

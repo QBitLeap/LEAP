@@ -49,7 +49,8 @@ def prepare(output, app_id, chain, port, image, core_app_id, local_fixture=False
                "depends_on": {"transport": {"condition": "service_healthy", "restart": True}},
                "stop_grace_period": "2m"}
     ui = {**common, "command": ["ui"], "network_mode": "service:transport",
-          "environment": {**common_env, "INDEX_API_TOKEN": "${" + prefix + "_API_TOKEN}"},
+          "environment": {**common_env, "INDEX_API_TOKEN": "${" + prefix + "_API_TOKEN}",
+                                "INDEX_ENABLED": "${INDEX_ENABLED:-0}"},
           "volumes": ["${APP_DATA_DIR}/data/index:/data:ro"], "mem_limit": "256m", "cpus": 1,
           "depends_on": {"transport": {"condition": "service_healthy", "restart": True}}}
     compose = {"services": {"app_proxy": {"environment": {"APP_HOST": app_id + "_transport_1", "APP_PORT": 8080}},
@@ -60,7 +61,7 @@ def prepare(output, app_id, chain, port, image, core_app_id, local_fixture=False
     version = {"leap": "0.1.0-alpha.0", "pins": "1.0.0", "qord": "0.1.0"}[PROTOCOL]
     repo = "https://github.com/QBitLeap/" + PROTOCOL + "-umbrel"
     manifest = {"manifestVersion": 2.0, "id": app_id, "storage": {"dataRoot": "data"},
-                "environment": [{"name": "INDEX_ENABLED", "services": ["indexer"], "default": "0",
+                "environment": [{"name": "INDEX_ENABLED", "services": ["indexer", "ui"], "default": "0", "options": ["0", "1"],
                                  "note": "Set 1 to index after checking Core, storage and power readiness."}],
                 "category": "finance", "name": title + " Indexer" + (" · Testnet4" if chain == "testnet4" else ""),
                 "version": package_version or version, "tagline": "Independent read-only " + title + " indexing",
@@ -68,7 +69,7 @@ def prepare(output, app_id, chain, port, image, core_app_id, local_fixture=False
                     + title + " index. Indexing starts paused; enable INDEX_ENABLED in app settings when ready. "
                     "Includes a browser status page and authenticated read API. No wallets, signing or broadcasting. "
                     "This is an amd64 package candidate.",
-                "releaseNotes": "", "developer": "QBitLeap", "website": upstream,
+                "releaseNotes": "Configurable dashboard refresh in minutes, one-minute minimum, and clearer paused/index-height status.", "developer": "QBitLeap", "website": upstream,
                 "dependencies": [core_app_id], "repo": repo, "support": repo + "/issues", "port": port,
                 "icon": icon_url, "gallery": [], "path": "", "defaultUsername": "", "defaultPassword": "",
                 "submitter": "QBitLeap"}

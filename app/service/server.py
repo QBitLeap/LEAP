@@ -55,7 +55,7 @@ class BoundedServer(ThreadingMixIn, HTTPServer):
     request_queue_size = 8
 
     def __init__(self, address, handler):
-        self.slots = threading.BoundedSemaphore(2)
+        self.slots = threading.BoundedSemaphore(getattr(handler, "request_concurrency", 2))
         super().__init__(address, handler)
 
     def process_request(self, request, address):
@@ -79,6 +79,7 @@ def handler(mode, client, chain, tokens=None):
     tokens = tokens or {}
 
     class Handler(BaseHTTPRequestHandler):
+        request_concurrency = 8 if mode == "ui" else 2
         server_version = "QbitApp"
         sys_version = ""
 
@@ -178,6 +179,7 @@ def handler(mode, client, chain, tokens=None):
                 return
             static = {"/": ("index.html", "text/html; charset=utf-8"),
                       "/app.js": ("app.js", "text/javascript; charset=utf-8"),
+                      "/refresh.js": ("refresh.js", "text/javascript; charset=utf-8"),
                       "/style.css": ("style.css", "text/css; charset=utf-8")}
             if self.path not in static:
                 self.send(404, {"error": "Not found"})

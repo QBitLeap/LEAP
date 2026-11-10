@@ -172,6 +172,7 @@ def front_handler(protocol, chain, directory, client, token):
                 try:
                     if path in {"/api/status", "/v1/status"}:
                         value = observed_status(protocol, chain, directory, client)
+                        value["indexingEnabled"] = os.environ.get("INDEX_ENABLED", "0") == "1"
                     elif path == "/v1/catalog" and protocol in {"leap", "pins"}:
                         query = parse_qs(target.query, strict_parsing=True)
                         if set(query) - {"offset", "limit"} or any(len(v) != 1 for v in query.values()):
@@ -192,8 +193,8 @@ def front_handler(protocol, chain, directory, client, token):
                     self.send(200, value)
                 except (CoreUnavailable, OSError, ValueError, sqlite3.Error, KeyError, TypeError):
                     self.send(503, {"app": protocol, "network": chain, "available": False,
-                                    "observedSynchronized": False,
-                                    "message": "Waiting for a compatible committed index and verified node"})
+                                    "observedSynchronized": False, "indexingEnabled": os.environ.get("INDEX_ENABLED", "0") == "1",
+                                    "message": "Indexing paused" if os.environ.get("INDEX_ENABLED", "0") != "1" else "Waiting for a compatible committed index and verified node"})
                 return
             super().do_GET()
     return Front
