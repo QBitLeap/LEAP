@@ -44,13 +44,13 @@ def prepare(output, app_id, chain, port, image, core_app_id, local_fixture=False
                   "from urllib.request import urlopen; urlopen('http://127.0.0.1:8081/healthz',timeout=2).close()"],
                   "interval": "10s", "timeout": "4s", "retries": 6}}
     indexer = {**common, "command": ["indexer"], "network_mode": "service:transport",
-               "environment": {**common_env, "INDEX_ENABLED": "${INDEX_ENABLED:-0}"},
+               "environment": {**common_env, "INDEX_ENABLED": "${INDEX_ENABLED:-1}"},
                "volumes": ["${APP_DATA_DIR}/data/index:/data"], "mem_limit": "2048m", "cpus": 2,
                "depends_on": {"transport": {"condition": "service_healthy", "restart": True}},
                "stop_grace_period": "2m"}
     ui = {**common, "command": ["ui"], "network_mode": "service:transport",
           "environment": {**common_env, "INDEX_API_TOKEN": "${" + prefix + "_API_TOKEN}",
-                                "INDEX_ENABLED": "${INDEX_ENABLED:-0}"},
+                                "INDEX_ENABLED": "${INDEX_ENABLED:-1}"},
           "volumes": ["${APP_DATA_DIR}/data/index:/data:ro"], "mem_limit": "256m", "cpus": 1,
           "depends_on": {"transport": {"condition": "service_healthy", "restart": True}}}
     compose = {"services": {"app_proxy": {"environment": {"APP_HOST": app_id + "_transport_1", "APP_PORT": 8080}},
@@ -61,15 +61,15 @@ def prepare(output, app_id, chain, port, image, core_app_id, local_fixture=False
     version = {"leap": "0.1.0-alpha.0", "pins": "1.0.0", "qord": "0.1.0"}[PROTOCOL]
     repo = "https://github.com/QBitLeap/" + PROTOCOL + "-umbrel"
     manifest = {"manifestVersion": 2.0, "id": app_id, "storage": {"dataRoot": "data"},
-                "environment": [{"name": "INDEX_ENABLED", "services": ["indexer", "ui"], "default": "0", "options": ["0", "1"],
-                                 "note": "Set 1 to index after checking Core, storage and power readiness."}],
+                "environment": [{"name": "INDEX_ENABLED", "services": ["indexer", "ui"], "default": "1", "options": ["0", "1"],
+                                 "note": "Indexing starts automatically. Set 0 to pause it."}],
                 "category": "finance", "name": title + " Indexer" + (" · Testnet4" if chain == "testnet4" else ""),
                 "version": package_version or version, "tagline": "Independent read-only " + title + " indexing",
                 "description": "Follow your selected Qbit Core instance and maintain a separate, persistent "
-                    + title + " index. Indexing starts paused; enable INDEX_ENABLED in app settings when ready. "
+                    + title + " index. Indexing starts automatically when Core is available. "
                     "Includes a browser status page, authenticated read API and a terminal launcher for wallet-backed inscriptions. "
                     "This is an amd64 package candidate.",
-                "releaseNotes": "Run the LEAP CLI from the Umbrel terminal to inscribe with a local Core wallet.", "developer": "QBitLeap", "website": upstream,
+                "releaseNotes": "Indexing starts automatically. Run the LEAP CLI from the Umbrel terminal to inscribe with a local Core wallet.", "developer": "QBitLeap", "website": upstream,
                 "dependencies": [core_app_id], "repo": repo, "support": repo + "/issues", "port": port,
                 "icon": icon_url, "gallery": [], "path": "", "defaultUsername": "", "defaultPassword": "",
                 "submitter": "QBitLeap"}

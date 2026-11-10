@@ -147,6 +147,9 @@ class IndexAppTests(unittest.TestCase):
             self.assertNotIn("submission", manifest)
             self.assertEqual(manifest["icon"], "https://raw.githubusercontent.com/QBitLeap/" + ROOT.name + "/main/icon.svg")
             self.assertEqual(manifest["dependencies"], ["independent-core"])
+            self.assertEqual(manifest["environment"][0]["default"], "1")
+            for service in ("indexer", "ui"):
+                self.assertEqual(services[service]["environment"]["INDEX_ENABLED"], "${INDEX_ENABLED:-1}")
             self.assertEqual(services["indexer"]["environment"]["QBIT_CHAIN"], "testnet4")
             self.assertEqual(services["indexer"]["volumes"], ["${APP_DATA_DIR}/data/index:/data"])
             self.assertEqual(services["ui"]["volumes"], ["${APP_DATA_DIR}/data/index:/data:ro"])

@@ -20,7 +20,7 @@ https://github.com/QBitLeap/umbrel-app-store
 The store is not ready until its image lock contains published registry
 manifest digests and the complete Mainnet/Testnet4 integration checks pass.
 Local image configuration IDs are not downloadable registry references.
-Indexing starts paused. Enable INDEX_ENABLED in app settings after selecting a ready Core instance.
+Indexing starts automatically when the matching Core instance is available.
 
 The dashboard accepts a refresh interval in whole minutes, with a one-minute
 default and minimum. The choice is saved in this browser, hidden pages stop
@@ -29,8 +29,7 @@ enabled indexing reports its current block and the selected node's block height.
 
 ## Inscribe from the Umbrel terminal
 
-Set `QBIT_WALLET_ENABLED=1` in the matching Qbit Core app's settings. Wait
-for Core and the LEAP indexer to reach the same chain tip. In the Umbrel host
+Wait for Core and the LEAP indexer to reach the same chain tip. In the Umbrel host
 terminal, run the launcher installed by Qbit Core with the directory that holds
 your inscription files.
 
