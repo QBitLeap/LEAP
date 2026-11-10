@@ -1,0 +1,8 @@
+Standalone Umbrel wrapper
+Copyright 2026 LEAP contributors
+
+Wrapper code: MIT; see LICENSE.
+
+LEAP protocol code is fetched from the reviewed public source commit in upstream.lock.json. Its own LICENSE is copied into the image.
+
+Container base images and language/runtime dependencies retain their upstream licenses.
