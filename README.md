@@ -1,8 +1,8 @@
 # LEAP for Umbrel
 
 Independent LEAP app source for umbrelOS 2.0 or newer. This is an amd64
-prerelease candidate; community-store publication and managed installation
-acceptance are still pending.
+prerelease. Published images have passed isolated Mainnet/Testnet4 integration;
+managed Umbrel installation and real-chain operation acceptance remain pending.
 
 This indexer depends on a selected Qbit Core app instance and owns its own index. Its app-local transport preserves loopback RPC while authenticating the separate Core connection.
 
