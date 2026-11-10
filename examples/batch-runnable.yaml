@@ -1,0 +1,15 @@
+version: 1
+mode: parentless
+
+defaults:
+  ownership_bits: 4000
+  collection: Leap Batch Example
+
+inscriptions:
+  - file: content/hello.txt
+    name: Hello from Leap
+    content_type: text/plain
+
+  - file: content/metadata.json
+    name: Batch Metadata
+    content_type: application/json

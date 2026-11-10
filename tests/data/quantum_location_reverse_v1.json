@@ -1,0 +1,38 @@
+{
+  "format": 1,
+  "valid": [
+    {
+      "current_index": 3,
+      "current_txid": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+      "id": "first-in-shared-coin",
+      "identity_index": 0,
+      "identity_txid": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "key": "52cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc000000030000000000000002aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa00000000",
+      "offset": 2,
+      "prefix": "52cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc00000003",
+      "value": "01"
+    },
+    {
+      "current_index": 3,
+      "current_txid": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+      "id": "second-in-shared-coin",
+      "identity_index": 2,
+      "identity_txid": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "key": "52cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc000000030000000000000007bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb00000002",
+      "offset": 7,
+      "prefix": "52cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc00000003",
+      "value": "01"
+    },
+    {
+      "current_index": 1,
+      "current_txid": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+      "id": "different-coin",
+      "identity_index": 4,
+      "identity_txid": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "key": "52dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd000000010000000000000000eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee00000004",
+      "offset": 0,
+      "prefix": "52dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd00000001",
+      "value": "01"
+    }
+  ]
+}

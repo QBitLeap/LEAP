@@ -1,0 +1,18 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "leap-qbit"
+version = "0.1.0a0"
+description = "Pre-alpha Leap implementation for Qbit"
+requires-python = ">=3.11"
+license = {text = "MIT"}
+dependencies = ["PyYAML>=6.0"]
+
+[project.scripts]
+quantums = "quantums.cli:main"
+leap = "quantums.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["quantums*", "indexer*"]

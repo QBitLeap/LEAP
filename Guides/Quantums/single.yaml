@@ -1,0 +1,8 @@
+version: 1
+mode: parentless
+defaults:
+  ownership_bits: 4000
+  content_type: text/plain
+inscriptions:
+  - file: content/first.txt
+    name: first.txt

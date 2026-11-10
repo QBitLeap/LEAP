@@ -1,0 +1,23 @@
+mode: pick-utxo
+
+collection:
+  name: Selected First-Bit Examples
+
+defaults:
+  ownership_bits: 4000
+  content_type: text/plain
+
+inscriptions:
+  - file: content/first.txt
+    name: Selected First Bit One
+    utxo: "1111111111111111111111111111111111111111111111111111111111111111:0"
+    metadata:
+      Sequence: 1
+      Selection: First bit
+
+  - file: content/second.txt
+    name: Selected First Bit Two
+    utxo: "2222222222222222222222222222222222222222222222222222222222222222:1"
+    metadata:
+      Sequence: 2
+      Selection: First bit

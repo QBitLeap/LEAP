@@ -1,0 +1,8 @@
+version: 1
+mode: parentless
+
+inscriptions:
+  - file: content/image.png
+    name: First Artwork
+  - file: content/document.pdf
+    name: First Document

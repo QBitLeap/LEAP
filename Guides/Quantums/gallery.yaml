@@ -1,0 +1,6 @@
+version: 1
+name: Leap Quantum Guide Gallery
+members: []
+ownership_bits: 4000
+# Add confirmed Quantum IDs to members later, or create this empty Gallery
+# and add them with leap gallery update --gallery <gallery-id> --add <quantum-id>.

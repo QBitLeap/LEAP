@@ -1,0 +1,27 @@
+version: 1
+mode: parentless
+
+defaults:
+  ownership_bits: 4000
+  collection: Quantum Leap Quotes
+
+inscriptions:
+  - file: content/quantum-quote-1.txt
+    name: Quantum Quote 1
+    content_type: text/plain
+
+  - file: content/quantum-quote-2.txt
+    name: Quantum Quote 2
+    content_type: text/plain
+
+  - file: content/quantum-quote-3.txt
+    name: Quantum Quote 3
+    content_type: text/plain
+
+  - file: content/quantum-quote-4.txt
+    name: Quantum Quote 4
+    content_type: text/plain
+
+  - file: content/quantum-quote-5.txt
+    name: Quantum Quote 5
+    content_type: text/plain

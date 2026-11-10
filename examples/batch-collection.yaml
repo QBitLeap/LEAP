@@ -1,0 +1,15 @@
+version: 1
+mode: parentless
+
+defaults:
+  ownership_bits: 4000
+  collection: Quantum Animals
+
+inscriptions:
+  - file: content/cat.png
+    name: Sample Cat
+    content_type: image/png
+
+  - file: content/dog.webp
+    name: Lunar Dog
+    content_type: image/webp

@@ -1,0 +1,15 @@
+version: 1
+mode: parentless
+collection:
+  name: Leap Quantum Guide
+  # Optional parent: change mode to parented, then set parent to a confirmed
+  # wallet-controlled parent ownership outpoint, for example "<txid>:<vout>".
+  # parent: "<current-parent-outpoint>"
+defaults:
+  ownership_bits: 4000
+  content_type: text/plain
+inscriptions:
+  - file: content/first.txt
+    name: First Guide Quantum
+  - file: content/second.txt
+    name: Second Guide Quantum

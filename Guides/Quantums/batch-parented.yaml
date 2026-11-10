@@ -1,0 +1,15 @@
+version: 1
+mode: parented
+collection:
+  name: Leap Quantum Guide
+  # Current testnet4 ownership output of FIRST PARENT! after its first batch.
+  # Replace this outpoint with its successor after another parented batch.
+  parent: "337d26ef018210e9614b5760913ad8e08b7351c46106d94bd66fd963dd325fe5:0"
+defaults:
+  ownership_bits: 4000
+  content_type: text/plain
+inscriptions:
+  - file: content/first.txt
+    name: First Guide Quantum
+  - file: content/second.txt
+    name: Second Guide Quantum

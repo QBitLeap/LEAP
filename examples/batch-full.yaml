@@ -1,0 +1,18 @@
+version: 1
+mode: parentless
+
+defaults:
+  ownership_bits: 4000
+  collection: Example Collection
+
+inscriptions:
+  - file: content/artwork.png
+    name: Artwork One
+    content_type: image/png
+    destination: tq1z...
+
+  - file: content/metadata.json
+    name: Collection Metadata
+    content_type: application/json
+    collection: Metadata
+    ownership_bits: 5000

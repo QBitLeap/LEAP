@@ -1,0 +1,22 @@
+mode: parented
+
+collection:
+  name: Quantum Leap Quotes
+  parent: 0931428b93490652872b35f91f57f7b33f66b8daf851a845c164d1de7ea86283:0
+
+defaults:
+  ownership_bits: 4000
+  content_type: text/plain
+
+inscriptions:
+  - file: content/first.txt
+    name: Child Quantum One
+    metadata:
+      Sequence: 1
+      Relationship: Child
+
+  - file: content/second.txt
+    name: Child Quantum Two
+    metadata:
+      Sequence: 2
+      Relationship: Child

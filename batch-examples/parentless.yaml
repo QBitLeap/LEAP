@@ -1,0 +1,24 @@
+mode: parentless
+
+collection:
+  name: Quantum Leap Quotes
+
+defaults:
+  ownership_bits: 4000
+  content_type: text/plain
+
+inscriptions:
+  - file: content/first.txt
+    name: Quantum Definition
+    metadata:
+      Subject: Quantum
+      Category: Definition
+      Sequence: 1
+
+  - file: content/second.txt
+    name: Leap Definition
+    metadata:
+      Subject: Leap
+      Category: Definition
+      Sequence: 2
+    # destination: tq1z...  # Optional; otherwise Leap creates a fresh address.

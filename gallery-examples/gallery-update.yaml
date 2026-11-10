@@ -1,0 +1,9 @@
+# This must be the latest, currently spendable gallery successor—not merely the
+# permanent root ID after one or more updates have occurred.
+gallery: b66a80270a567b2b600fc8384ebff3eca644fadabfe8646b0332c9de63de0c9c:0
+
+add:
+  - dc8551b390d23343ec76ba8f052a5eb954899839d02e16b661e19c28a540702b:2
+
+remove:
+  - 208ec770fe3ccd321234421c48829e9686ed6107b11747b7c5a4e2b1c4832017:0

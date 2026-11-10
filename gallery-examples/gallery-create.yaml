@@ -1,0 +1,14 @@
+name: Leap Example Gallery
+
+# Members remain in this display order. Transaction IDs shared by adjacent
+# Quantums are packed once in the canonical on-chain gallery record.
+members:
+  - 062d5a1e42b902739de3b10d21a6263dc6c4f8a8be33cdcd03695f4f76d13d51:0
+  - 062d5a1e42b902739de3b10d21a6263dc6c4f8a8be33cdcd03695f4f76d13d51:1
+  - 208ec770fe3ccd321234421c48829e9686ed6107b11747b7c5a4e2b1c4832017:0
+
+# Optional. Omit to generate a fresh P2MR address in the selected wallet.
+# destination: tq1z...
+
+# Optional. Defaults to 4000.
+ownership_bits: 4000
