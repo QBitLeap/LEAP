@@ -8,6 +8,7 @@ COPY protocol/LICENSE /usr/share/doc/leap/LICENSE
 COPY LICENSE NOTICE /usr/share/doc/leap-app/
 COPY source-manifest.json /usr/share/doc/leap/source-manifest.json
 COPY --chmod=0555 app /opt/index-app
+RUN ln -s /opt/index-app/leap /usr/local/bin/leap
 ENV PYTHONPATH=/opt/protocol:/opt/index-app PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1 HOME=/tmp
 RUN mkdir -p /data && chown 1000:1000 /data
 USER 1000:1000

@@ -27,6 +27,38 @@ default and minimum. The choice is saved in this browser, hidden pages stop
 refreshing, and requests never overlap. Paused indexing is shown explicitly;
 enabled indexing reports its current block and the selected node's block height.
 
+## Inscribe from the Umbrel terminal
+
+Set `QBIT_WALLET_ENABLED=1` in the matching Qbit Core app's settings. Wait
+for Core and the LEAP indexer to reach the same chain tip. In the Umbrel host
+terminal, run the launcher installed by Qbit Core with the directory that holds
+your inscription files.
+
+```sh
+sudo sh /home/umbrel/umbrel/app-data/qbitleap-core-main/qbit-terminal.sh leap main /path/to/inscription-files
+```
+
+Use `testnet4` for both network names with the Testnet4 apps. In the LEAP shell, create a wallet
+once and generate a funding address.
+
+```sh
+leap wallet create leap --chain "$QBIT_CHAIN" --rpc-cookie /auth/.cookie
+leap receive --wallet leap --chain "$QBIT_CHAIN" --rpc-cookie /auth/.cookie
+```
+
+Once the wallet has confirmed funds, check the inscription with a dry run.
+Choose the fee rate in bits/vB. Remove `--dry-run` to broadcast through Core.
+
+```sh
+leap inscribe artwork.png --name "Quantum name" --fee 1 --wallet leap \
+  --chain "$QBIT_CHAIN" --rpc-cookie /auth/.cookie --dry-run
+```
+
+The wallet is stored by Qbit Core. The operator shell reaches Core through
+loopback and uses the existing Core cookie. The LEAP dashboard and indexer
+keep their read-only access to Core. Inscribing this way pays the Qbit
+network fee directly.
+
 ## Source checks
 
 ```sh

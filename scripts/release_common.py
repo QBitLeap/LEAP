@@ -40,6 +40,9 @@ def build(root, context, component, version, revision, publish):
         "--user", "1000:1000", "--cap-drop", "ALL", "--security-opt", "no-new-privileges=true",
         "--pids-limit", "64", "--memory", "256m", tag,
         "--version" if component == "qbit-core" else "--help"], check=True)
+    if component == "leap-indexer":
+        subprocess.run(["docker", "run", "--rm", "--network", "none", "--read-only",
+            "--entrypoint", "leap", tag, "inscribe", "--help"], check=True)
     if component == "qord-indexer":
         subprocess.run(["docker", "run", "--rm", "--network", "none", "--read-only",
             "--user", "1000:1000", "--cap-drop", "ALL", "--security-opt", "no-new-privileges=true",

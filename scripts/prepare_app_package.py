@@ -67,9 +67,9 @@ def prepare(output, app_id, chain, port, image, core_app_id, local_fixture=False
                 "version": package_version or version, "tagline": "Independent read-only " + title + " indexing",
                 "description": "Follow your selected Qbit Core instance and maintain a separate, persistent "
                     + title + " index. Indexing starts paused; enable INDEX_ENABLED in app settings when ready. "
-                    "Includes a browser status page and authenticated read API. No wallets, signing or broadcasting. "
+                    "Includes a browser status page, authenticated read API and a terminal launcher for wallet-backed inscriptions. "
                     "This is an amd64 package candidate.",
-                "releaseNotes": "Configurable dashboard refresh in minutes, one-minute minimum, and clearer paused/index-height status.", "developer": "QBitLeap", "website": upstream,
+                "releaseNotes": "Run the LEAP CLI from the Umbrel terminal to inscribe with a local Core wallet.", "developer": "QBitLeap", "website": upstream,
                 "dependencies": [core_app_id], "repo": repo, "support": repo + "/issues", "port": port,
                 "icon": icon_url, "gallery": [], "path": "", "defaultUsername": "", "defaultPassword": "",
                 "submitter": "QBitLeap"}
