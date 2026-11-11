@@ -78,10 +78,12 @@ def prepare(output, app_id, chain, port, image, core_app_id, local_fixture=False
     (output / "data/index/.gitkeep").write_text("")
     for name, value in (("umbrel-app.yml", manifest), ("docker-compose.yml", compose)):
         (output / name).write_text(json.dumps(value, indent=2) + "\n")
+    # Umbrel also sources this file in the caller's app context.
+    entropy = f"app-{app_id}-seed"
     exports = (f'export {prefix}_API_URL="http://{app_id}_transport_1:8080/v1/"\n'
                f'export {prefix}_API_USER="reader"\n'
-               f'export {prefix}_API_TOKEN="$(derive_entropy "${{app_entropy_identifier}}-read-api")"\n'
-               f'export {prefix}_LOCAL_TOKEN="$(derive_entropy "${{app_entropy_identifier}}-local-rpc")"\n')
+               f'export {prefix}_API_TOKEN="$(derive_entropy "{entropy}-read-api")"\n'
+               f'export {prefix}_LOCAL_TOKEN="$(derive_entropy "{entropy}-local-rpc")"\n')
     (output / "exports.sh").write_text(exports)
     shutil.copyfile(ROOT / "icon.svg", output / "icon.svg")
     report = {"format": "standalone-indexer-app-package-v1", "protocol": PROTOCOL, "appId": app_id,
