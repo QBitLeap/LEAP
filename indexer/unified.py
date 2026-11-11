@@ -81,6 +81,13 @@ class UnifiedIndex:
         if len({os.stat(path.parent).st_dev for path in database_paths}) != 1:
             raise IndexError("all index databases must be on one filesystem")
         self.connection = sqlite3.connect(database_paths[0])
+        try:
+            self._initialize()
+        except BaseException:
+            self.connection.close()
+            raise
+
+    def _initialize(self) -> None:
         self.connection.row_factory = sqlite3.Row
         self.connection.execute("PRAGMA foreign_keys=ON")
         self.connection.execute("PRAGMA busy_timeout=30000")

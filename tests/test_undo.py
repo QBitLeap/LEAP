@@ -1,3 +1,4 @@
+from contextlib import closing
 import sqlite3
 import subprocess
 import sys
@@ -19,8 +20,7 @@ class IncrementalUndoTests(unittest.TestCase):
         return connection
 
     def test_insert_update_delete_inverse_mutations_restore_exact_state(self):
-        with tempfile.TemporaryDirectory() as directory:
-            connection = self.connection(directory)
+        with tempfile.TemporaryDirectory() as directory, closing(self.connection(directory)) as connection:
             connection.execute("INSERT INTO module_0.objects VALUES(1,?,10)", (b"immutable",))
             before = [tuple(row) for row in connection.execute("SELECT * FROM module_0.objects")]
             undo = UndoRecorder(connection, "module_0", 0, "block")
@@ -31,8 +31,7 @@ class IncrementalUndoTests(unittest.TestCase):
             self.assertEqual([tuple(row) for row in connection.execute("SELECT * FROM module_0.objects")], before)
 
     def test_malformed_or_missing_sequence_fails_without_partial_inverse(self):
-        with tempfile.TemporaryDirectory() as directory:
-            connection = self.connection(directory)
+        with tempfile.TemporaryDirectory() as directory, closing(self.connection(directory)) as connection:
             connection.execute("INSERT INTO module_0.objects VALUES(1,?,10)", (b"immutable",))
             undo = UndoRecorder(connection, "module_0", 0, "block")
             undo.update("objects", {"id": 1}, {"value": 11})
@@ -46,8 +45,7 @@ class IncrementalUndoTests(unittest.TestCase):
             self.assertEqual(connection.execute("SELECT value FROM module_0.objects WHERE id=1").fetchone()[0], 12)
 
     def test_undo_rows_scale_with_mutations_across_two_thousand_blocks(self):
-        with tempfile.TemporaryDirectory() as directory:
-            connection = self.connection(directory)
+        with tempfile.TemporaryDirectory() as directory, closing(self.connection(directory)) as connection:
             connection.execute("CREATE TABLE module_0.locations(id INTEGER PRIMARY KEY, value INTEGER NOT NULL)")
             for object_id in range(100):
                 connection.execute("INSERT INTO module_0.objects VALUES(?,?,0)", (object_id, b"x" * 256))
@@ -84,11 +82,11 @@ os._exit(91)
 '''
             result = subprocess.run([sys.executable, "-c", script, directory], cwd=Path(__file__).parents[1])
             self.assertEqual(result.returncode, 91)
-            recovered = sqlite3.connect(Path(directory) / "undo.sqlite3")
-            recovered.row_factory = sqlite3.Row
-            recovered.execute("ATTACH DATABASE ? AS module_0", (str(Path(directory) / "module.sqlite3"),))
-            self.assertEqual(recovered.execute("SELECT value FROM module_0.objects WHERE id=1").fetchone()[0], 10)
-            self.assertEqual(recovered.execute("SELECT count(*) FROM module_0.block_undo").fetchone()[0], 0)
+            with closing(sqlite3.connect(Path(directory) / "undo.sqlite3")) as recovered:
+                recovered.row_factory = sqlite3.Row
+                recovered.execute("ATTACH DATABASE ? AS module_0", (str(Path(directory) / "module.sqlite3"),))
+                self.assertEqual(recovered.execute("SELECT value FROM module_0.objects WHERE id=1").fetchone()[0], 10)
+                self.assertEqual(recovered.execute("SELECT count(*) FROM module_0.block_undo").fetchone()[0], 0)
 
 
 if __name__ == "__main__":

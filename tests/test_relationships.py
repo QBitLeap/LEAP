@@ -1,3 +1,4 @@
+from contextlib import closing
 import hashlib
 from io import StringIO
 import json
@@ -176,7 +177,7 @@ class RelationshipTests(unittest.TestCase):
         with self.assertRaisesRegex(RelationshipError, "not canonical"):
             self.query().discover()
         self.chain.transactions[h(400)]["vout"][2]["value_bits"] = 0
-        with sqlite3.connect(self.directory / "quantum.sqlite3") as db:
+        with closing(sqlite3.connect(self.directory / "quantum.sqlite3")) as db, db:
             db.execute("UPDATE quantums SET content_sha256=? WHERE quantum_id=?", (h(0), self.chain.parent))
         with self.assertRaisesRegex(RelationshipError, "differs"):
             self.query().discover()
@@ -184,10 +185,10 @@ class RelationshipTests(unittest.TestCase):
     def test_wrong_network_genesis_profile_and_tips_are_rejected(self):
         with self.assertRaises(RpcError): QuantumRelationshipQuery(self.directory, "main", self.chain).discover()
         with self.assertRaises(RelationshipError): QuantumRelationshipQuery(self.directory, "pebbletest", self.chain)
-        with sqlite3.connect(self.directory / "leap-index.sqlite3") as db:
+        with closing(sqlite3.connect(self.directory / "leap-index.sqlite3")) as db, db:
             db.execute("UPDATE index_config SET pebble_profile='portable'")
         with self.assertRaises(RelationshipError): self.query().discover()
-        with sqlite3.connect(self.directory / "leap-index.sqlite3") as db:
+        with closing(sqlite3.connect(self.directory / "leap-index.sqlite3")) as db, db:
             db.execute("UPDATE index_config SET pebble_profile='off'")
         with patch.object(self.chain, "call", side_effect=lambda method, *params: h(999) if method == "getblockhash" else {"chain": "testnet4"}):
             with self.assertRaisesRegex(RelationshipError, "committed chain"): self.query().discover()
@@ -228,10 +229,10 @@ class RelationshipTests(unittest.TestCase):
         with self.assertRaises(RelationshipError):
             QuantumRelationshipQuery(missing, "testnet4", self.chain).discover()
         self.assertFalse(missing.exists())
-        with sqlite3.connect(self.directory / "quantum.sqlite3") as db:
+        with closing(sqlite3.connect(self.directory / "quantum.sqlite3")) as db, db:
             db.execute("UPDATE index_tip SET height=99")
         with self.assertRaisesRegex(RelationshipError, "synchronizing"): self.query().discover()
-        with sqlite3.connect(self.directory / "quantum.sqlite3") as db:
+        with closing(sqlite3.connect(self.directory / "quantum.sqlite3")) as db, db:
             db.execute("UPDATE schema_info SET version=99")
         with self.assertRaisesRegex(RelationshipError, "schema"): self.query().discover()
 

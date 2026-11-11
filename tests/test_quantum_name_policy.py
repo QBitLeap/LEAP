@@ -1,3 +1,4 @@
+from contextlib import closing
 from dataclasses import replace
 from decimal import Decimal
 from pathlib import Path
@@ -15,12 +16,12 @@ class NamePolicyTests(unittest.TestCase):
         self.temp = tempfile.TemporaryDirectory(); self.addCleanup(self.temp.cleanup)
         self.root = Path(self.temp.name)
         self.index = self.root / "index"; self.index.mkdir()
-        with sqlite3.connect(self.index / "leap-index.sqlite3") as db:
+        with closing(sqlite3.connect(self.index / "leap-index.sqlite3")) as db, db:
             db.execute("CREATE TABLE index_config(singleton,network)")
             db.execute("INSERT INTO index_config VALUES(1,'testnet4')")
             db.execute("CREATE TABLE blocks(height,hash)")
             db.execute("INSERT INTO blocks VALUES(1,'tip')")
-        with sqlite3.connect(self.index / "quantum.sqlite3") as db:
+        with closing(sqlite3.connect(self.index / "quantum.sqlite3")) as db, db:
             db.execute("CREATE TABLE index_tip(singleton,height,hash)")
             db.execute("INSERT INTO index_tip VALUES(1,1,'tip')")
             db.execute("CREATE TABLE quantums(quantum_id,name)")
@@ -116,7 +117,7 @@ class NamePolicyTests(unittest.TestCase):
                 raise AssertionError(method)
         node=Node()
         def signed(*_args,**_kwargs):
-            with sqlite3.connect(self.index/'quantum.sqlite3') as db:
+            with closing(sqlite3.connect(self.index/'quantum.sqlite3')) as db, db:
                 db.execute("INSERT INTO quantums VALUES('race:0','New Art')")
             return PreparedInscription('owner',4000,100,'00','0.00001',100,True,None,txid='ff'*32)
         with patch('quantums.cli.rpc_from_args',return_value=node), patch('quantums.cli.require_synchronized_index'), patch('quantums.cli.prepare_inscription',side_effect=signed):
