@@ -1,5 +1,9 @@
 # LEAP
 
+| macOS | Windows | Linux | Umbrel |
+| --- | --- | --- | --- |
+| [<img alt="LEAP for macOS" src="https://raw.githubusercontent.com/QBitLeap/umbrel-app-store/f02d8c427c868dd1fbbf06bc70b1cea238bca807/assets/platform-icons/leap/macos.png" width="72">](https://github.com/QBitLeap/LEAP/releases/latest) | [<img alt="LEAP for Windows" src="https://raw.githubusercontent.com/QBitLeap/umbrel-app-store/f02d8c427c868dd1fbbf06bc70b1cea238bca807/assets/platform-icons/leap/windows.png" width="72">](https://github.com/QBitLeap/LEAP/releases/latest) | [<img alt="LEAP for Linux" src="https://raw.githubusercontent.com/QBitLeap/umbrel-app-store/f02d8c427c868dd1fbbf06bc70b1cea238bca807/assets/platform-icons/leap/linux.png" width="72">](https://github.com/QBitLeap/LEAP/releases/latest) | [<img alt="LEAP for Umbrel" src="https://raw.githubusercontent.com/QBitLeap/umbrel-app-store/f02d8c427c868dd1fbbf06bc70b1cea238bca807/assets/platform-icons/leap/umbrel.png" width="72">](https://github.com/QBitLeap/umbrel-app-store) |
+
 Pre-alpha Quantum inscriptions, Galleries and a persistent Qbit indexer.
 LEAP validates canonical envelopes, tracks permanent Quantum IDs through
 ordinary UTXO spends and supplies CLI transaction preparation/recovery.
@@ -9,11 +13,14 @@ isolated viewer.
 
 ## Requirements
 
-Python 3.11 or newer, PyYAML 6 or newer and Qbit Core. Node-backed commands
+Desktop downloads include the CLI, indexer and Python runtime. Extract the archive
+and run `./leap --help` in its directory, or `.\leap.exe --help` in Windows
+PowerShell. Install [Qbit Core](https://github.com/Qbit-Org/qbit/releases) for
+node-backed commands. Source installs require Python 3.11 or newer and PyYAML 6 or
+newer. Node-backed commands
 can use qbit-cli or HTTP RPC. Wallet operations require a separately managed,
 loaded P2MR wallet; the read-only index follower does not need wallet access.
-Native macOS, Windows and Linux release artifacts are planned; native release
-acceptance is still pending. The independent [Umbrel app source](https://github.com/QBitLeap/leap-umbrel)
+The independent [Umbrel app source](https://github.com/QBitLeap/leap-umbrel)
 and [community app store](https://github.com/QBitLeap/umbrel-app-store) are maintained
 separately. Installation requires a validated published catalog.
 

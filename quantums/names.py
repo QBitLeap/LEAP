@@ -95,9 +95,15 @@ class PendingNameCatalog:
     def connect(self):
         self.directory.mkdir(mode=0o700, parents=True, exist_ok=True)
         path = self.directory / "pending-names.sqlite3"
-        fd = os.open(path, os.O_RDWR | os.O_CREAT | os.O_NOFOLLOW, 0o600)
-        os.fchmod(fd, 0o600)
-        os.close(fd)
+        nofollow = getattr(os, "O_NOFOLLOW", 0)
+        if not nofollow and path.is_symlink():
+            raise OSError("The pending-name database must be a regular file")
+        fd = os.open(path, os.O_RDWR | os.O_CREAT | nofollow, 0o600)
+        try:
+            if os.name != "nt":
+                os.fchmod(fd, 0o600)
+        finally:
+            os.close(fd)
         db = sqlite3.connect(path, timeout=5)
         db.execute("CREATE TABLE IF NOT EXISTS pending_names(network TEXT NOT NULL,txid TEXT NOT NULL,names TEXT NOT NULL,first_seen INTEGER NOT NULL,PRIMARY KEY(network,txid))")
         db.commit()
