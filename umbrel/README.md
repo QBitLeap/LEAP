@@ -1,5 +1,10 @@
 # LEAP for Umbrel
 
+This packaging is maintained in [QBitLeap/LEAP](https://github.com/QBitLeap/LEAP/tree/main/umbrel).
+Run packaging commands from this `umbrel/` directory. Protocol and image identity
+are explicit and do not depend on the checkout directory name.
+The imported Git history is preserved without squashing.
+
 Independent LEAP app source for umbrelOS 2.0 or newer. This is an amd64
 prerelease. Published images have passed isolated Mainnet/Testnet4 integration;
 managed Umbrel installation and real-chain operation acceptance remain pending.

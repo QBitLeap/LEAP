@@ -9,7 +9,7 @@ import shutil
 from urllib.parse import urlsplit
 
 ROOT = Path(__file__).resolve().parents[1]
-PROTOCOL = ROOT.name.removesuffix("-umbrel")
+PROTOCOL = 'leap'
 
 
 def prepare(output, app_id, chain, port, image, core_app_id, local_fixture=False, icon_url=None, package_version=None):
@@ -23,7 +23,7 @@ def prepare(output, app_id, chain, port, image, core_app_id, local_fixture=False
     if not re.fullmatch(r"[a-z0-9][a-z0-9./:_-]*@sha256:[0-9a-f]{64}", image) and not (
             local_fixture and re.fullmatch(r"sha256:[0-9a-f]{64}", image)):
         raise ValueError("Pinned image required")
-    icon_url = icon_url or "https://raw.githubusercontent.com/QBitLeap/" + PROTOCOL + "-umbrel/main/icon.svg"
+    icon_url = icon_url or 'https://raw.githubusercontent.com/QBitLeap/LEAP/main/umbrel/icon.svg'
     icon = urlsplit(icon_url)
     if icon.scheme not in {"http", "https"} or not icon.hostname or icon.username or icon.password or icon.fragment:
         raise ValueError("Expected a hosted icon URL without credentials")
@@ -59,7 +59,7 @@ def prepare(output, app_id, chain, port, image, core_app_id, local_fixture=False
     upstream = {"leap": "https://github.com/QBitLeap/LEAP", "pins": "https://github.com/P2MR-PINS-Protocol/pins",
                 "qord": "https://github.com/djh58/qord"}[PROTOCOL]
     version = {"leap": "0.1.0-alpha.0", "pins": "1.0.0", "qord": "0.1.0"}[PROTOCOL]
-    repo = "https://github.com/QBitLeap/" + PROTOCOL + "-umbrel"
+    repo = 'https://github.com/QBitLeap/LEAP'
     manifest = {"manifestVersion": 2.0, "id": app_id, "storage": {"dataRoot": "data"},
                 "environment": [{"name": "INDEX_ENABLED", "services": ["indexer", "ui"], "default": "1", "options": ["0", "1"],
                                  "note": "Indexing starts automatically. Set 0 to pause it."}],

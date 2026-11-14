@@ -21,6 +21,6 @@ if __name__ == "__main__":
     fetch(upstream, json.loads((ROOT / "upstream.lock.json").read_text()))
     context = output / "context"
     prepare(upstream, context)
-    report = build(ROOT, context, ROOT.name.removesuffix("-umbrel") + "-indexer",
+    report = build(ROOT, context, 'leap-indexer',
                    args.version, revision, args.publish)
     write_report(output, [report])

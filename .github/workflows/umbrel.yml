@@ -1,0 +1,76 @@
+name: Umbrel images and packages
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Explicit image version (never changes installed apps)
+        required: true
+        type: string
+      publish:
+        description: Publish the tested image to the existing leap-indexer package
+        required: true
+        default: false
+        type: boolean
+permissions:
+  contents: read
+jobs:
+  umbrel:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          repository: QBitLeap/umbrel-app-store
+          ref: 0f7d5758a834555f89dcdfe33af30f61ac32724e
+          path: .catalog-fixture
+          persist-credentials: false
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0
+        with:
+          python-version: '3.13'
+      - run: python -m pip install PyYAML==6.0.3
+      - run: python -m unittest discover -s tests -v
+      - run: python -m unittest discover -s umbrel/tests -v
+      - run: node umbrel/checks/dashboard.test.cjs
+      - name: Login for explicit publication
+        if: inputs.publish
+        uses: docker/login-action@8aa5831fb8d48d8f76594c7ddde61ae58019f550
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build and optionally publish the stable image identity
+        working-directory: umbrel
+        env:
+          RELEASE_VERSION: ${{ inputs.version }}
+          PUBLISH_IMAGES: ${{ inputs.publish }}
+        run: |
+          if [ "$PUBLISH_IMAGES" = true ]; then
+            python scripts/release_images.py "$RELEASE_VERSION" --publish
+          else
+            python scripts/release_images.py "$RELEASE_VERSION"
+          fi
+      - name: Generate Mainnet and historical Testnet4 packages; verify isolated catalog integration
+        if: inputs.publish
+        env:
+          RELEASE_VERSION: ${{ inputs.version }}
+        run: |
+          python scripts/verify_umbrel_release.py "$RELEASE_VERSION" .catalog-fixture .umbrel-acceptance
+          python .catalog-fixture/checks/integration.py .umbrel-acceptance/images.json --sources .umbrel-acceptance/sources.json --output .umbrel-acceptance/integration.json
+      - name: Retain publication and package acceptance receipts
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: leap-umbrel-release
+          include-hidden-files: true
+          if-no-files-found: error
+          path: |
+            umbrel/.release/*/published-images.json
+            umbrel/.release/*/context/source-manifest.json
+            .umbrel-acceptance/

@@ -20,9 +20,11 @@ node-backed commands. Source installs require Python 3.11 or newer and PyYAML 6 
 newer. Node-backed commands
 can use qbit-cli or HTTP RPC. Wallet operations require a separately managed,
 loaded P2MR wallet; the read-only index follower does not need wallet access.
-The independent [Umbrel app source](https://github.com/QBitLeap/leap-umbrel)
-and [community app store](https://github.com/QBitLeap/umbrel-app-store) are maintained
-separately. Installation requires a validated published catalog.
+Umbrel packaging and its image/publication workflow live in [umbrel/](umbrel/README.md)
+in this repository alongside native platform builds. Install through the
+[community app store](https://github.com/QBitLeap/umbrel-app-store). Existing app IDs,
+networks and data paths are unchanged. The previous leap-umbrel history is retained
+in this repository and in its archived source repository after acceptance.
 
 ## Quick start
 

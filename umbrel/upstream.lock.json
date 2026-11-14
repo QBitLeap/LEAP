@@ -3,5 +3,5 @@
   "commit": "090a0bfedfbca52457a9e736c28cc98f17133640",
   "patches": [],
   "format": "reviewed-upstream-source-v1",
-  "scope": "Public Quantum and Gallery implementation; inactive schema compatibility slots only; native platform release matrix remains separate"
+  "scope": "Reviewed public LEAP Quantum/Gallery runtime; Umbrel packaging is maintained in LEAP/umbrel alongside native platform workflows"
 }

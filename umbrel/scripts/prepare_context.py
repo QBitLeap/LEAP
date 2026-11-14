@@ -9,7 +9,7 @@ import shutil
 import subprocess
 
 ROOT = Path(__file__).resolve().parents[1]
-PROTOCOL = ROOT.name.removesuffix("-umbrel")
+PROTOCOL = 'leap'
 PINS_REVISION = "3e014f4ff156a35eea4b8613e37116fd124aa719"
 QORD_REVISION = "a4febe49f10eb6ba10ded6ab42098a5bec7be914"
 IMPORT = re.compile(r'''(?:from\s*|import\s*\()\s*["']([^"']+)["']''')

@@ -15,3 +15,7 @@ leap-arbitrary-data.json
 *.db
 *.log
 wallet.dat*
+
+# Disposable workflow checkout and Umbrel publication verification
+/.catalog-fixture/
+/.umbrel-acceptance/

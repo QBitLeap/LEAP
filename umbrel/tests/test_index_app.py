@@ -145,7 +145,7 @@ class IndexAppTests(unittest.TestCase):
             services = json.loads((output / "docker-compose.yml").read_text())["services"]
             manifest = json.loads((output / "umbrel-app.yml").read_text())
             self.assertNotIn("submission", manifest)
-            self.assertEqual(manifest["icon"], "https://raw.githubusercontent.com/QBitLeap/" + ROOT.name + "/main/icon.svg")
+            self.assertEqual(manifest["icon"], 'https://raw.githubusercontent.com/QBitLeap/LEAP/main/umbrel/icon.svg')
             self.assertEqual(manifest["dependencies"], ["independent-core"])
             self.assertEqual(manifest["environment"][0]["default"], "1")
             for service in ("indexer", "ui"):
