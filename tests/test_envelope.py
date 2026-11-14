@@ -99,11 +99,11 @@ class EnvelopeTests(unittest.TestCase):
         chunks = split_batch(items, lambda start, stop: tuple(range(stop - start)))
         self.assertEqual(tuple(item.name for chunk in chunks for item in chunk), tuple(item.name for item in items))
         self.assertEqual(tuple(len(chunk) for chunk in chunks), (3, 1))
-        self.assertTrue(all(len(encode_batch(chunk)) <= 190_000 for chunk in chunks))
+        self.assertTrue(all(len(encode_batch(chunk)) <= 198_000 for chunk in chunks))
 
     def test_single_quantum_larger_than_carrier_cannot_be_split(self):
         item = create_artifact(
-            b"x" * 190_000,
+            b"x" * 198_000,
             content_type="application/octet-stream",
             name="large.bin",
             format_version=2,

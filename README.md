@@ -80,3 +80,12 @@ python -m unittest discover -s tests
 Tests use generated fixtures and mock RPC, not live signing or publication.
 Native platform packages and Umbrel install/lifecycle checks are separate gates.
 See LICENSE for the preserved project license.
+
+## Envelope limit in 0.1.1
+
+All platform builds share a maximum **198,000-byte encoded envelope**, including
+headers, content and metadata. The corresponding OP_RETURN script is 198,006
+bytes, below Core's default 200,000-byte carrier policy. Final transaction policy
+and fee checks still apply. Upgrade older LEAP readers/indexers to recognize the
+newly allowed size range; existing encoded envelopes and format versions remain
+unchanged. This source update does not reset or move any native index.

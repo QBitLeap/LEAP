@@ -100,7 +100,7 @@ class BatchTests(unittest.TestCase):
         self.assertEqual(tuple(item.artifact.name for chunk in chunks for item in chunk.items), tuple(a.name for a in artifacts))
         self.assertEqual(tuple(item.artifact.ownership_output for item in chunks[0].items), (1, 2, 3))
         self.assertEqual(tuple(item.artifact.ownership_output for item in chunks[1].items), (1,))
-        self.assertTrue(all(len(encode_batch(tuple(item.artifact for item in chunk.items))) <= 190_000 for chunk in chunks))
+        self.assertTrue(all(len(encode_batch(tuple(item.artifact for item in chunk.items))) <= 198_000 for chunk in chunks))
 
 
 if __name__ == "__main__":

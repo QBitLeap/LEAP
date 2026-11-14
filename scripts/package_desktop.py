@@ -52,6 +52,19 @@ def package(output, assets):
         run(exe, "build", "smoke.txt", "--name", "Desktop fixture", "--out", "smoke.quantum", cwd=work)
         run(exe, "inspect", "smoke.quantum", cwd=work)
         run(exe, "batch", "--help", cwd=work)
+        # Exercise the packaged binary above the previous envelope ceiling.
+        (work / "near-limit.txt").write_bytes(b"x" * 197_000)
+        run(exe, "build", "near-limit.txt", "--name", "Envelope boundary",
+            "--out", "near-limit.quantum", cwd=work)
+        encoded = (work / "near-limit.quantum").read_bytes()
+        if not 190_000 < len(encoded) <= 198_000:
+            raise RuntimeError("Packaged binary does not implement the 198,000-byte envelope limit")
+        run(exe, "inspect", "near-limit.quantum", cwd=work)
+        (work / "oversized.txt").write_bytes(b"x" * 198_001)
+        refused = subprocess.run([str(exe), "build", "oversized.txt", "--name", "Oversized",
+                                  "--out", "oversized.quantum"], cwd=work, capture_output=True)
+        if refused.returncode == 0:
+            raise RuntimeError("Packaged binary accepted an oversized envelope")
     print(archive)
 
 

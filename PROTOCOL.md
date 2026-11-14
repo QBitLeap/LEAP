@@ -64,15 +64,20 @@ extracting archives. Other applications may impose narrower upload allowlists.
 
 ## Limits
 
-The reference implementation defaults to a 190,000-byte maximum envelope. This
-leaves room below Qbit's current default 200,000-byte data-carrier policy for
-script overhead and policy variation. Node operators can configure different
+The reference implementation defaults to a 198,000-byte maximum envelope. This
+is the complete encoded envelope limit, including headers and metadata, in decimal
+bytes. The single OP_RETURN/PUSHDATA4 script is 198,006 bytes at that limit,
+leaving 1,994 bytes below Qbit's default 200,000-byte data-carrier policy. Node operators can configure different
 relay limits, so `testmempoolaccept` is authoritative for a particular node.
 
 Transaction size and fee calculations MUST use the finalized Qbit transaction.
 Wallet signature data can make otherwise similar transactions materially
 different in virtual size, so an envelope-size-only fee estimate is not
 authoritative.
+
+Implementations using the older 190,000-byte ceiling must upgrade to recognize
+envelopes in the newly allowed range. Existing smaller envelopes retain the same
+canonical bytes and format versions; no chain/index reset is part of this update.
 
 ## Quantum transfers
 
@@ -117,7 +122,7 @@ ownership UTXO.
 Batch splitting is canonical and ordered. Leap processes entries in their YAML
 order and greedily appends each complete encoded Quantum to the current
 transaction while the resulting version-2 batch envelope is no more than
-190,000 bytes. The first Quantum that would exceed the limit begins the next
+198,000 bytes. The first Quantum that would exceed the limit begins the next
 transaction, and the process repeats. Implementations MUST NOT reorder entries
 to obtain a different packing. A single Quantum envelope is indivisible; if it
 cannot fit by itself, preflight fails before broadcast.
@@ -128,8 +133,10 @@ header, encoded CBOR metadata, and content bytes. YAML syntax, indentation,
 comments, paths, defaults, and other authoring-only bytes are not carried and do
 not count. Metadata values selected from YAML do count after canonical CBOR
 encoding, just as inscription content counts. OP_RETURN script framing and the
-rest of the transaction remain outside the 190,000-byte envelope target and fit
-within the margin below Qbit's current 200,000-byte carrier policy.
+rest of the transaction remain outside the 198,000-byte envelope target and fit
+within Qbit's current 200,000-byte carrier policy. The final transaction must
+also meet transaction-size, fee and local relay policy; this envelope ceiling
+does not override those checks.
 
 All chunks preserve the original mode, collection commitment, per-item
 metadata, content, destination, and—where applicable—parent or source-UTXO

@@ -8,6 +8,7 @@ from pathlib import Path
 from typing import Any
 
 from quantums.rpc import QbitRpc
+from quantums.envelope import MAX_ENVELOPE_BYTES
 
 from .arbitrary_data import inventory_transaction
 
@@ -54,7 +55,7 @@ def scan(rpc: QbitRpc, state_path: Path, *, checkpoint: int = 5_000) -> dict[str
                     "canonical_single_push": item.canonical_single_push,
                     "media_hint": item.media_hint,
                     "readable_preview": item.readable_preview,
-                    "within_quantum_envelope_limit": len(item.payload) <= 190_000,
+                    "within_quantum_envelope_limit": len(item.payload) <= MAX_ENVELOPE_BYTES,
                     "canonical_leap_items": item.leap_items,
                 })
         state["last_height"] = height
