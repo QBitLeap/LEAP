@@ -1,6 +1,6 @@
 {
   "repository": "https://github.com/QBitLeap/LEAP.git",
-  "commit": "090a0bfedfbca52457a9e736c28cc98f17133640",
+  "commit": "bbe1e229af51967c7bb5b0176afc4fdc6cce7dad",
   "patches": [],
   "format": "reviewed-upstream-source-v1",
   "scope": "Reviewed public LEAP Quantum/Gallery runtime; Umbrel packaging is maintained in LEAP/umbrel alongside native platform workflows"

@@ -15,7 +15,7 @@ def main():
  spec=importlib.util.spec_from_file_location('leap_package',ROOT/'umbrel/scripts/prepare_app_package.py');module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
  for chain,port in (('main',5101),('testnet4',5111)):
   module.prepare(a.output/('qbitleap-leap-'+chain),'qbitleap-leap-'+chain,chain,port,image,'qbitleap-core-'+chain,
-                 icon_url='https://raw.githubusercontent.com/QBitLeap/LEAP/'+revision+'/umbrel/icon.svg',package_version='0.1.6')
+                 icon_url='https://raw.githubusercontent.com/QBitLeap/LEAP/'+revision+'/umbrel/icon.svg',package_version=a.version)
  lock=json.loads((a.catalog/'images.lock.json').read_text());lock['leap']=image
  sources=json.loads((a.catalog/'sources.lock.json').read_text());sources['apps']['leap']={'repository':'https://github.com/QBitLeap/LEAP.git','commit':revision,'packageCommit':revision,'path':'umbrel'}
  (a.output/'images.json').write_text(json.dumps(lock,indent=2)+'\n');(a.output/'sources.json').write_text(json.dumps(sources,indent=2)+'\n')
