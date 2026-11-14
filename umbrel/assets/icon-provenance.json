@@ -1,0 +1,26 @@
+{
+  "format": "umbrel-icon-provenance-v1",
+  "icon": "icon.svg",
+  "sourceKind": "owner-approved LeapLogo",
+  "sourceFileName": "LeapLogo.png",
+  "sourceSha256": "19ec9227cec2351b55894103e58432fe9e7bacebcc69fbb5aa103678dd0e7f48",
+  "iconSha256": "269437c3a8105cb75ea0307809c02dd3419808051ab0118e630d861b5429e509",
+  "svgType": "embedded PNG artwork",
+  "vectorArtwork": false,
+  "rasterResampled": false,
+  "sourceDimensions": [
+    1024,
+    1536
+  ],
+  "viewport": [
+    512,
+    512
+  ],
+  "fit": "centered contain; no cropping/stretching",
+  "nonRenderingMetadataRemoved": [
+    "caBX"
+  ],
+  "embeddedPngSha256": "411f568aaddf7ea34f88f5313976cb188db7ad7e0fe4f35cfc71a71dd2b9b71d",
+  "pixelScanlinesSha256": "e34467cbf3b6b02f0ef96edc4ae1ea1a272e86b05848b543124724c4028abb19",
+  "sourceArtworkUnchanged": true
+}
